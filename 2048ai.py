@@ -17,6 +17,8 @@ from typing import Union, List
 import random
 import time
 
+# AI
+from search import ai
 
 reader = easyocr.Reader(['en'])
 
@@ -104,7 +106,7 @@ def create_4x4_board(board:np.ndarray) -> List[List[int]]:
 
 
 def take_screen_shot() -> np.ndarray:
-    mon = {'left': 0, 'top': 0, 'width': 1400 , 'height': 900}
+    mon = {'left': 0, 'top': 0, 'width': 2560, 'height': 1440}
     with mss() as sct:
         screenShot = sct.grab(mon)
         img = Image.frombytes(
@@ -132,12 +134,9 @@ def move(direction:str) -> None:
 
 
 if __name__ == "__main__":
-    # kontroll kas mäng veel kestab hetkel on puudu
-    # testimiseks
-    max_moves = 20
     moves_made = 0
     boards_loc = "boards2/"
-    while(moves_made != max_moves):
+    while True:
         take_screen_shot()
         # hetkel screenshot.png faili susteemis
         board = get_board(debug=False)
@@ -153,10 +152,12 @@ if __name__ == "__main__":
 
 
         # Mängu aju    
-        # next_move = ai(new_board)
+        next_move = ai(new_board)
 
-        next_move = random.choice(["up", "down", "left", "right"])
-        move(next_move)
+        if next_move:
+            move(next_move)
+        else:
+            break
         # testimiseks
         moves_made += 1
         # animatsiooni parast
