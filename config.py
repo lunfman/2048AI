@@ -5,7 +5,7 @@ class Config:
     screen_width = 1440
     screen_height = 900
 
-    # Logging level INFO sobilik, kui soovite naha koik logid, siis mutke INFO -> DEBUG
+    # Logging level INFO sobilik, kui soovite naha koik logid, siis muutke INFO -> DEBUG
     logging_level = logging.INFO
 
     # Debug directories
