@@ -12,7 +12,7 @@ Works with the following web pages:
 1. **Create a virtual environment:**
 
    ```sh
-   cd 2048ai
+   cd 2048AI
    python3 -m venv .venv
    source .venv/bin/activate
    ```
