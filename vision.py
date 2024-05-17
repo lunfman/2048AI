@@ -131,6 +131,7 @@ class GameVision():
 
 
     def take_screenshot(self) -> np.ndarray:
+        # https://stackoverflow.com/questions/35097837/capture-video-data-from-screen-in-python
         mon = {'left': 0, 'top': 0, 'width': Config.screen_width , 'height': Config.screen_height}
         with mss() as sct:
             screenShot = sct.grab(mon)
