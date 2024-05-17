@@ -27,9 +27,7 @@ if __name__ == "__main__":
     debug = logging.getLogger().isEnabledFor(logging.DEBUG)
     moves_made = 0
     game_not_found = 0
-
-    def reset_game_not_found() -> None:
-        game_not_found = 0
+    prev_board = []
 
     while True:
         vision.take_screenshot()
@@ -41,6 +39,7 @@ if __name__ == "__main__":
             logging.error("Make sure that screen.png in the code folder represents your screen correctly")
             logging.error(f"Current screen resolution is set to {Config.screen_width}x{Config.screen_height}")
             logging.error("The resolution can be changed in config.py")
+            logging.error("Also, make sure that you grant the necessary access to the screen capture.")
             break
         
         if board is not None:
@@ -48,12 +47,16 @@ if __name__ == "__main__":
             logging.debug(new_board)
             if debug:
                 cv2.imwrite(f"{Config.boards_loc}/{moves_made}.png", board)
-            reset_game_not_found()
+            game_not_found = 0
         else:
             logging.warning("Board not found, please open webpage with game")
             time.sleep(Config.board_not_found_waiting_time)
             game_not_found += 1
             continue
+
+        if prev_board == new_board:
+            logging.error("Game controls do not work. It looks like your system requires permission access")
+            break
 
         if not vision.is_game:
             logging.info("Game finished")
@@ -69,5 +72,6 @@ if __name__ == "__main__":
             break
         # testimiseks
         moves_made += 1
+        prev_board = new_board
         # animatsiooni parast
         time.sleep(Config.animation_delay)
