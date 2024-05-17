@@ -27,6 +27,7 @@ if __name__ == "__main__":
     debug = logging.getLogger().isEnabledFor(logging.DEBUG)
     moves_made = 0
     game_not_found = 0
+    repeated_board = 0
     prev_board = []
 
     while True:
@@ -52,6 +53,7 @@ if __name__ == "__main__":
             logging.warning("Board not found, please open webpage with game")
             time.sleep(Config.board_not_found_waiting_time)
             game_not_found += 1
+            prev_board = []
             continue
 
         if prev_board == new_board:
