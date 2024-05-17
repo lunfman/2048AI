@@ -60,8 +60,8 @@ class GameVision():
 
         height, width = board_image.shape[:2]
 
-        if height != width:
-            logging.debug("Found an object that matches area, but it is not a square")
+        if abs(height - width) >= 5:
+            logging.debug(f"Found an object that matches area, but it is not a square. Height: {height} width:{width}")
             return None
         
         if self.__debug:
