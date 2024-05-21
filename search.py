@@ -9,11 +9,11 @@ snake = np.array([[13, 14, 15, 16], [12, 11, 10, 9], [5, 6, 7, 8], [4, 3, 2, 1]]
 snake = np.float64(2) ** (-snake)
 def evaluate(board):
     # encourage the snake formation, more empty tiles
-    s1 = (snake * board).sum() 
-    s2 = (np.flip(snake, axis=(0, 1)) * board).sum() 
-    s3 = (np.flip(snake.T, axis=0) * board).sum() 
-    s4 = (np.flip(snake.T, axis=1) * board).sum()
-    return np.max([s1, s2, s3, s4]) + (board == 0).sum() * 1
+    s1 = (snake * 2**board).sum() 
+    s2 = (np.flip(snake, axis=(0, 1)) * 2**board).sum() 
+    s3 = (np.flip(snake.T, axis=0) * 2**board).sum() 
+    s4 = (np.flip(snake.T, axis=1) * 2**board).sum()
+    return np.max([s1, s2, s3, s4]) + (board == 0).sum() * 0.1
 
 nodes_processed = 0
 def expectimax(board, depth):
@@ -50,7 +50,9 @@ def expectimax(board, depth):
     return exp
 
 def search(board):
-    depth = 2 # 3 is too slow (>1 min per move)
+    depth = 1 # 1 is enough to reach 2048, then switch to 2
+    if board.max() >= 11:
+        depth = 2
     bestmove = None
     bestvalue = -1
     for move in [game.U, game.D, game.R, game.L]:
